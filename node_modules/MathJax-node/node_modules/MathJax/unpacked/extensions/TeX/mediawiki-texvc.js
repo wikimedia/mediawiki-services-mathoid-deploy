@@ -52,6 +52,7 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready", function () {
 			O: ["Macro", "\\emptyset"],
 			Omicron: ["Macro", "\\mathrm{O}"],
 			or: ["Macro", "\\lor"],
+			pagecolor: ['Macro','',1],  // ignore \pagecolor{}
 			part: ["Macro", "\\partial"],
 			plusmn: ["Macro", "\\pm"],
 			Q: ["Macro", "\\mathbb{Q}"],
