@@ -80,7 +80,7 @@ var STATE = {
 //
 // The MathJaxPath is normaized against file:/// so that Windows paths are correct
 // 
-var MathJaxPath = url.resolve("file:///","file:"+require.resolve('MathJax/unpacked/MathJax'));
+var MathJaxPath = url.resolve("file:///","file:"+require.resolve('mathoid-mathjax/unpacked/MathJax'));
 var BatikRasterizerPath = path.resolve(__dirname,'..','batik/batik-rasterizer.jar');
 var MathJaxConfig;                 // configuration for when starting MathJax
 var MathJax;                       // filled in once MathJax is loaded

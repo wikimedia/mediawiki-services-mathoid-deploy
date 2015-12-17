@@ -79,7 +79,7 @@ var STATE = {
 //
 // The MathJaxPath is normaized against file:/// so that Windows paths are correct
 // 
-var MathJaxPath = url.resolve("file:///","file:"+require.resolve('MathJax/unpacked/MathJax'));
+var MathJaxPath = url.resolve("file:///","file:"+require.resolve('mathoid-mathjax/unpacked/MathJax'));
 var BatikRasterizerPath = path.resolve(__dirname,'..','batik/batik-rasterizer.jar');
 var MathJaxConfig;                   // configuration for when starting MathJax
 var MathJax;                         // filled in once MathJax is loaded
@@ -192,7 +192,10 @@ function ConfigureMathJax() {
       //  Trap Math Processing Errors
       //
       MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
-        AddError("Math Processing Error: "+message[2].message);
+          console.log('MathJax will not survive this problem. Terminating itself.');
+          process.exit(1);
+          //@TODO: fix it.
+        //AddError("Math Processing Error: "+message[2].message);
       });
       MathJax.Hub.Register.MessageHook("SVG Jax - unknown char",function (message) {
         AddError("SVG - Unknown character: U+"+message[1].toString(16).toUpperCase()+
