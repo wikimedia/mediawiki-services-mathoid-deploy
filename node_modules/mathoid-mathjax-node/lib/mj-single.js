@@ -55,7 +55,7 @@ var defaults = {
 
   mml: false,                     // return mml output?
   svg: false,                     // return svg output?
-  img: false,                     // return img tag for remote image?
+  mathoidStyle: false,            // return mathoidStyle tag for remote image?
   png: false,                     // return png image (as data: URL)?
   dpi: 144,                       // dpi for png image
 
@@ -145,7 +145,7 @@ function ConfigureMathJax() {
     //
     jax: ["input/TeX", "input/MathML", "input/AsciiMath", "output/SVG"],
     extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","toMathML.js"],
-    TeX: {extensions: window.Array("AMSmath.js","AMSsymbols.js","autoload-all.js","mediawiki-texvc.js")},
+    TeX: {extensions: window.Array("AMSmath.js","AMSsymbols.js","autoload-all.js","mediawiki-texvc.js","mhchem.js")},
     tex2jax: {inlineMath: [['$','$'],['\\(','\\)']], preview:"none"},
     mml2jax: {preview:"none"},
     asciimath2jax: {preview:"none"},
@@ -443,11 +443,14 @@ function GetSpeech(result) {
 //  Create SVG output and IMG output, if requested
 //
 function GetSVG(result) {
-  if (!data.svg && !data.png && !data.img) return;
+  if (!data.svg && !data.png && !data.mathoidStyle) return;
   var jax = MathJax.Hub.getAllJax()[0]; if (!jax) return;
   var script = jax.SourceElement(),
       svg = script.previousSibling.getElementsByTagName("svg")[0];
   svg.setAttribute("xmlns","http://www.w3.org/2000/svg");
+  // Mathoid SVG style adjustments
+  var style = svg.getAttribute("style").replace(/(?:margin(?:-[a-z]+)?|position):[^;]+; */g, '');
+  svg.setAttribute("style",style);
 
   //
   //  Add the speech text and mark the SVG appropriately
@@ -485,15 +488,11 @@ function GetSVG(result) {
   //
   if (data.svg) result.svg = svgdata;
   if (data.png) result.svgfile = svgfile;
-  if (data.img) {
+  if (data.mathoidStyle) {
     if (data.svg) result.svg = svgfile;
-    result.img = [
-      '<img src="file.svg" style="',
+    result.mathoidStyle = [
       svg.style.cssText,
-      " width:",svg.getAttribute("width"),"; height:",svg.getAttribute("height"),
-      ';"',
-      (data.speakText ? ' alt="'+result.speakText+'"' : ""),
-      ' />'
+      " width:",svg.getAttribute("width"),"; height:",svg.getAttribute("height"),';'
     ].join("");
   }
 }
