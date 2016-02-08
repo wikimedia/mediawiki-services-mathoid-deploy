@@ -198,6 +198,18 @@ var testcases = [
             ],
             "success": true
         }
+    }, {
+        input: '\\ce{H2O}',
+        out: {
+            "error":{
+                "detail": "mhchem package required.",
+                "found": "\\ce",
+                "message": "Attempting to use the $\\ce$ command outside of a chemistry environment.",
+                "name": "SyntaxError",
+                "status": "C"
+                },
+            "success": false
+        }
     }
 ];
 

@@ -21,8 +21,13 @@ module.exports = function (input,options) {
     var texvcres = texvcjs.check(input,options);
     if (texvcres.status !== '+') {
         out.success = false;
-        out.status = texvcres.status;
-        out.detail = texvcres.details;
+        out.error = {
+            status: texvcres.status,
+            message: "Attempting to use the $\\ce$ command outside of a chemistry environment.",
+            detail: texvcres.details,
+            found: "\\ce", // ce is the only command that can trigger this problem
+            name: "SyntaxError"
+        };
         return out;
     }
     out.checked = texvcres.output;
