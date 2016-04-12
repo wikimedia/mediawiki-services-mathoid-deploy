@@ -12,6 +12,6 @@ tape('basic test: check MathJax core', function(t) {
         png: true,
         mathoidStyle: true
     }, function (data) {
-        t.ok(data.png.length > 100, 'PNG has a certain length');
+        t.ok(data.png.length > 1000, 'PNG has a certain length');
     });
 });
