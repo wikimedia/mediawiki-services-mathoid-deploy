@@ -1,5 +1,5 @@
 "use strict";
-var tokenTypeArrays = module.exports.typeArray = [ "TEX_ONLY", "LITERAL", "FQ", "DQ", "FQN", "DQN",
+var tokenTypeArrays = module.exports.typeArray = ["TEX_ONLY", "LITERAL", "FQ", "DQ", "FQN", "DQN",
     "FUN1", "FUN1hf", "DECLh", "FUN2", "FUN2h", "FUN2nb", "FUN2sq",
     "CURLY", "INFIX", "INFIXh", "BOX", "BIG", "MATRIX", "LR"];
 

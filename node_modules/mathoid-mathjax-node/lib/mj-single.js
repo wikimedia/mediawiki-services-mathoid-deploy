@@ -59,7 +59,7 @@ var defaults = {
   svg: false,                     // return svg output?
   mathoidStyle: false,            // return mathoidStyle tag for remote image?
   png: false,                     // return png image (as data: URL)?
-  dpi: 144,                       // dpi for png image
+  dpi: 180,                       // dpi for png image
 
   speakText: false,               // add spoken annotations to svg output?
   speakRuleset: "mathspeak",      // set speech ruleset (default (chromevox rules), mathspeak)
@@ -507,7 +507,7 @@ function GetSVG(result) {
 //
 function GetPNG(result) {
     var s = new Readable();
-    var pngScale = 2;
+    var pngScale = data.dpi / 90; // 90 DPI is the effective setting used by librsvg
     var svgFile = result.svgfile; result.svgfile=undefined;
     var width = result.width; result.width=undefined;
     var height = result.height; result.height=undefined;

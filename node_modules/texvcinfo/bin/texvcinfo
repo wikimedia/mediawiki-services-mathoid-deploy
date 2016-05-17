@@ -26,11 +26,11 @@ var input = program.args.join(' ');
 
 var texvcinfo = require('../');
 var result;
-if ( program.output === 'feedback' ) {
+if (program.output === 'feedback') {
     result = texvcinfo.feedback(input);
 } else {
     result = texvcinfo.texvcinfo(input,
-        {debug: program.debug, format: program.output, flatTree: program.flat, compact:program.compact});
+        {debug: program.debug, format: program.output, flatTree: program.flat, compact: program.compact});
 }
 
 // output result

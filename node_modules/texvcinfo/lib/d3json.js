@@ -1,5 +1,5 @@
 "use strict";
-module.exports = function (e,flat) {
+module.exports = function (e, flat) {
     var tokenTree = function (e) {
         if (Array.isArray(e)) {
             return {name: 'root', children: e.map(tokenTree)};
