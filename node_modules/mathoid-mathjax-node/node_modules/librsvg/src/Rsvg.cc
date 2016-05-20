@@ -81,7 +81,7 @@ NAN_METHOD(Rsvg::New) {
             if (error) {
                 Nan::ThrowError(error->message);
                 g_error_free(error);
-                ARGVAR.GetReturnValue().Set(Nan::Undefined());
+                return ARGVAR.GetReturnValue().Set(Nan::Undefined());
             }
         } else {
             handle = rsvg_handle_new();
@@ -89,7 +89,7 @@ NAN_METHOD(Rsvg::New) {
         // Error handling.
         if (!handle) {
             Nan::ThrowError("Unable to create RsvgHandle instance.");
-            ARGVAR.GetReturnValue().Set(Nan::Undefined());
+            return ARGVAR.GetReturnValue().Set(Nan::Undefined());
         }
         // Create object.
         Rsvg* obj = new Rsvg(handle);
@@ -235,7 +235,7 @@ NAN_METHOD(Rsvg::Dimensions) {
         id = *idArg;
         if (!id) {
             Nan::ThrowError("Invalid argument: id");
-            ARGVAR.GetReturnValue().Set(Nan::Undefined());
+            return ARGVAR.GetReturnValue().Set(Nan::Undefined());
         }
     }
 
@@ -271,7 +271,7 @@ NAN_METHOD(Rsvg::HasElement) {
         id = *idArg;
         if (!id) {
             Nan::ThrowError("Invalid argument: id");
-            ARGVAR.GetReturnValue().Set(Nan::Undefined());
+            return ARGVAR.GetReturnValue().Set(Nan::Undefined());
         }
     }
 
@@ -288,11 +288,11 @@ NAN_METHOD(Rsvg::Render) {
 
     if (width <= 0) {
         Nan::ThrowError("Expected width > 0.");
-        ARGVAR.GetReturnValue().Set(Nan::Undefined());
+        return ARGVAR.GetReturnValue().Set(Nan::Undefined());
     }
     if (height <= 0) {
         Nan::ThrowError("Expected height > 0.");
-        ARGVAR.GetReturnValue().Set(Nan::Undefined());
+        return ARGVAR.GetReturnValue().Set(Nan::Undefined());
     }
 
     String::Utf8Value formatArg(ARGVAR[2]);
@@ -304,20 +304,20 @@ NAN_METHOD(Rsvg::Render) {
         pixelFormat = CAIRO_FORMAT_ARGB32;
     } else if (renderFormat == RENDER_FORMAT_JPEG) {
         Nan::ThrowError("Format not supported: JPEG");
-        ARGVAR.GetReturnValue().Set(Nan::Undefined());
+        return ARGVAR.GetReturnValue().Set(Nan::Undefined());
     } else if (
             renderFormat == RENDER_FORMAT_SVG ||
             renderFormat == RENDER_FORMAT_PDF) {
         pixelFormat = CAIRO_FORMAT_INVALID;
     } else if (renderFormat == RENDER_FORMAT_VIPS) {
         Nan::ThrowError("Format not supported: VIPS");
-        ARGVAR.GetReturnValue().Set(Nan::Undefined());
+        return ARGVAR.GetReturnValue().Set(Nan::Undefined());
     } else {
         renderFormat = RENDER_FORMAT_RAW;
         pixelFormat = CairoFormatFromString(formatString);
         if (pixelFormat == CAIRO_FORMAT_INVALID) {
             Nan::ThrowError("Invalid argument: format");
-            ARGVAR.GetReturnValue().Set(Nan::Undefined());
+            return ARGVAR.GetReturnValue().Set(Nan::Undefined());
         }
     }
 
@@ -327,11 +327,11 @@ NAN_METHOD(Rsvg::Render) {
         id = *idArg;
         if (!id) {
             Nan::ThrowError("Invalid argument: id");
-            ARGVAR.GetReturnValue().Set(Nan::Undefined());
+            return ARGVAR.GetReturnValue().Set(Nan::Undefined());
         }
         if (!rsvg_handle_has_sub(obj->_handle, id)) {
             Nan::ThrowError("SVG element with given id does not exists.");
-            ARGVAR.GetReturnValue().Set(Nan::Undefined());
+            return ARGVAR.GetReturnValue().Set(Nan::Undefined());
         }
     }
 
@@ -340,16 +340,16 @@ NAN_METHOD(Rsvg::Render) {
 
     if (!rsvg_handle_get_position_sub(obj->_handle, &position, id)) {
         Nan::ThrowError("Could not get position of SVG element with given id.");
-        ARGVAR.GetReturnValue().Set(Nan::Undefined());
+        return ARGVAR.GetReturnValue().Set(Nan::Undefined());
     }
 
     if (!rsvg_handle_get_dimensions_sub(obj->_handle, &dimensions, id)) {
         Nan::ThrowError("Could not get dimensions of SVG element or whole image.");
-        ARGVAR.GetReturnValue().Set(Nan::Undefined());
+        return ARGVAR.GetReturnValue().Set(Nan::Undefined());
     }
     if (dimensions.width <= 0 || dimensions.height <= 0) {
         Nan::ThrowError("Got invalid dimensions of SVG element or whole image.");
-        ARGVAR.GetReturnValue().Set(Nan::Undefined());
+        return ARGVAR.GetReturnValue().Set(Nan::Undefined());
     }
 
     std::string data;
@@ -407,7 +407,7 @@ NAN_METHOD(Rsvg::Render) {
         Nan::ThrowError(
                 status ? cairo_status_to_string(status) : "Failed to render image."
                 );
-        ARGVAR.GetReturnValue().Set(Nan::Undefined());
+        return ARGVAR.GetReturnValue().Set(Nan::Undefined());
     }
 
     int stride = -1;
@@ -430,7 +430,7 @@ NAN_METHOD(Rsvg::Render) {
         Nan::ThrowError(
                 "Rendered with invalid stride (byte size of row) for ARGB32 format."
                 );
-        ARGVAR.GetReturnValue().Set(Nan::Undefined());
+        return ARGVAR.GetReturnValue().Set(Nan::Undefined());
     }
 
     Handle<ObjectTemplate> image = ObjectTemplate::New();

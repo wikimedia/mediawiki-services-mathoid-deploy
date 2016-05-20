@@ -13,7 +13,7 @@ tape('basic test: check MathJax core', function(t) {
         svg: true,
         mathoidStyle: true
     }, function(data) {
-        t.equal(data.svg.indexOf('margin-'),-1,'There should be no margins');
+        t.ok(data.svg.indexOf('margin-') > 0, 'There should be margins');
         t.ok(data.mathoidStyle.indexOf('width')>0,'Mathoid style must include width info');
     });
 });
