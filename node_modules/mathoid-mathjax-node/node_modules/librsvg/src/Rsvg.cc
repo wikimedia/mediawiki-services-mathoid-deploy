@@ -23,6 +23,12 @@ cairo_status_t GetDataChunks(void* closure, const unsigned char* chunk, unsigned
 
 Nan::Persistent<Function> Rsvg::constructor;
 
+#if NODE_VERSION_AT_LEAST(6, 0, 0)
+void Rsvg::propGetter(v8::Local<v8::String> name, const v8::PropertyCallbackInfo<v8::Value>& info) {
+    info.GetReturnValue().Set(info.Data());
+}
+#endif
+
 Rsvg::Rsvg(RsvgHandle* const handle) : _handle(handle) {}
 
 Rsvg::~Rsvg() {
@@ -99,7 +105,7 @@ NAN_METHOD(Rsvg::New) {
         // Invoked as plain function `Rsvg(...)`, turn into construct call.
         const int argc = 1;
         Local<Value> argv[argc] = { ARGVAR[0] };
-        ARGVAR.GetReturnValue().Set(Nan::New<Function>(constructor)->NewInstance(argc, argv));
+        ARGVAR.GetReturnValue().Set(CREATE_FUNC(constructor));
     }
 }
 
@@ -433,24 +439,28 @@ NAN_METHOD(Rsvg::Render) {
         return ARGVAR.GetReturnValue().Set(Nan::Undefined());
     }
 
-    Handle<ObjectTemplate> image = ObjectTemplate::New();
+    Handle<ObjectTemplate> image = CREATE_OBJ();
     if (renderFormat == RENDER_FORMAT_SVG) {
-        image->Set(Nan::New("data").ToLocalChecked(), Nan::New<String>(data.c_str()).ToLocalChecked());
+        PROP_SET(image, "data", Nan::New<String>(data.c_str()).ToLocalChecked());
     } else {
         char* strbuf = new char[data.length()+1];
         data.copy(strbuf, data.length());
-        image->Set(Nan::New("data").ToLocalChecked(), Nan::NewBuffer(strbuf, data.length()).ToLocalChecked());
+
+        Nan::MaybeLocal<v8::Object> buffer = Nan::NewBuffer(strbuf, data.length());
+        PROP_SET(image, "data", buffer.ToLocalChecked());
+    }
+    
+    PROP_SET(image, "format", RenderFormatToString(renderFormat));
+    if (pixelFormat != CAIRO_FORMAT_INVALID) {
+        PROP_SET(image, "pixelFormat", CairoFormatToString(pixelFormat));
     }
 
-    image->Set(Nan::New("format").ToLocalChecked(), RenderFormatToString(renderFormat));
-    if (pixelFormat != CAIRO_FORMAT_INVALID) {
-        image->Set(Nan::New("pixelFormat").ToLocalChecked(), CairoFormatToString(pixelFormat));
-    }
-    image->Set(Nan::New("width").ToLocalChecked(), Nan::New<Integer>(width));
-    image->Set(Nan::New("height").ToLocalChecked(), Nan::New<Integer>(height));
+    PROP_SET(image, "width", Nan::New<Integer>(width));
+    PROP_SET(image, "height", Nan::New<Integer>(height));
     if (stride != -1) {
-        image->Set(Nan::New("stride").ToLocalChecked(), Nan::New<Integer>(stride));
+        PROP_SET(image, "stride", Nan::New<Integer>(stride));
     }
+
     ARGVAR.GetReturnValue().Set(image->NewInstance());
 }
 
