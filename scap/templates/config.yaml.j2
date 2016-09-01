@@ -1,0 +1,95 @@
+# Number of worker processes to spawn.
+# Set to 0 to run everything in a single process without clustering.
+# Use 'ncpu' to run as many workers as there are CPU units
+num_workers: <%= num_workers %>
+
+# Log error messages and gracefully restart a worker if v8 reports that it
+# uses more heap (note: not RSS) than this many mb.
+worker_heap_limit_mb: <%= worker_heap_limit_mb %>
+
+# The maximum interval in ms that can pass between two beat messages
+# sent by each worker to the master before it is killed
+worker_heartbeat_timeout: <%= worker_heartbeat_timeout %>
+
+# Logger info
+logging:
+  level: warn
+  name: <%= log_name %>
+  streams: 
+    - host: <%= logstash_host %>
+      port: <%= logstash_port %>
+      type: gelf
+    - level: info
+      path: <%= log_file %>
+      type: file
+
+# Statsd metrics reporter
+metrics: 
+  name: <%= metrics_name %>
+  host: <%= metrics_host %>
+  port: <%= metrics_port %>
+  type: statsd
+
+services:
+  - name: <%= name %>
+    # a relative path or the name of an npm package, if different from name
+    module: ./src/app.js
+    # per-service config
+    conf:
+      port: <%= port %>
+      # interface: localhost # uncomment to only listen on localhost
+      # more per-service config settings
+      # the location of the spec, defaults to spec.yaml if not specified
+      # spec: ./spec.template.yaml
+      # allow cross-domain requests to the API (default '*')
+      cors: '*'
+      # to disable use:
+      # cors: false
+      # to restrict to a particular domain, use:
+      # cors: restricted.domain.org
+      # content for the CSP headers
+      # csp: false  # uncomment this line to disable sending them
+      # URL of the outbound proxy to use (complete with protocol)
+      proxy: <%= proxy %>
+      # the list of domains for which not to use the proxy defined above
+      # no_proxy_list:
+      #   - domain1.com
+      #   - domain2.org
+      # the list of incoming request headers that can be logged; if left empty,
+      # the following headers are allowed: cache-control, content-length,
+      # content-type, if-match, user-agent, x-request-id
+      # log_header_whitelist:
+      #   - cache-control
+      #   - content-length
+      #   - content-type
+      #   - if-match
+      #   - user-agent
+      #   - x-request-id
+      # list of enabled renders
+      svg: true
+      img: true
+      png: true
+      speech: false
+      texvcinfo: true
+      speech_on: false
+      no_check: true
+      dpi: 180
+      svgo: false
+      # the user agent to use when issuing requests
+      # user_agent: service-template-node
+      # the template used for contacting the MW API
+      mwapi_req:
+        method: post
+        uri: <%= mwapi_uri %>
+        headers:
+          host: '{{request.params.domain}}'
+          user-agent: '{{user-agent}}'
+        body: '{{ default(request.query, {}) }}'
+      # the template used for contacting RESTBase
+      restbase_req:
+        method: '{{request.method}}'
+        uri: <%= restbase_uri %>/{{domain}}/v1/{+path}
+        query: '{{ default(request.query, {}) }}'
+        headers: '{{request.headers}}'
+        body: '{{request.body}}'
+

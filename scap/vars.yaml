@@ -1,0 +1,20 @@
+# general
+num_workers: 0
+worker_heap_limit_mb: 250
+worker_heartbeat_timeout: 7500
+# log-related variables
+log_name: mathoid
+logstash_host: localhost
+logstash_port: 12201
+log_file: /tmp/mathoid.log
+# metrics
+metrics_name: mathoid
+metrics_host: localhost
+metrics_port: 8252
+# service
+name: mathoid
+port: 10042
+proxy: 
+mwapi_uri: http://localhost/w/api.php
+restbase_uri: http://localhost:7231
+
