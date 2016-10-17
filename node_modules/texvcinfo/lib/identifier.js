@@ -70,6 +70,8 @@ var fun1 = function (f, a) {
             return renderArgs(a);
         }
         return [f + "{" + ident + "}"];
+    } else if ( f === "\\operatorname" ) {
+        return [];
     }
     return renderArgs(a);
 };

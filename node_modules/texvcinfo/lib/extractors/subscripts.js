@@ -2,7 +2,7 @@
 
 var ast = module.exports.ast = require('texvcjs').ast;
 var letterMods = require('../letterMods.json');
-var extendedLiterals = require('../literals.json');
+var extendedLiterals = require('../literals.json').slice(0);
 extendedLiterals.push('\\infty', '\\emptyset');
 
 ast.RenderT.defineVisitor("id_part", {
