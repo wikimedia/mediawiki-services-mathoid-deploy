@@ -1,7 +1,7 @@
 "use strict";
 var assert = require('assert');
-var ast = require('texvcjs').ast;
-var texvc = require("texvcjs");
+var ast = require('mathoid-texvcjs').ast;
+var texvc = require('mathoid-texvcjs');
 var lister = require('../lib/identifier').render;
 var testcases = [
     {in: '', out: []},

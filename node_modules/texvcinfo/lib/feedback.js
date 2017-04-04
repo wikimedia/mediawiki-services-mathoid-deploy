@@ -1,5 +1,5 @@
 "use strict";
-var texvcjs = require("texvcjs");
+var texvcjs = require("mathoid-texvcjs");
 var indentifierExtractor = module.exports.treeFromAst = require('./identifier').render;
 var packageList = ['ams', 'cancel', 'color', 'euro', 'teubner', 'mhchem'];
 var tokList = require('./flatList.js');

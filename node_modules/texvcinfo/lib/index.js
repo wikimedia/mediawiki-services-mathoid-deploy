@@ -9,7 +9,7 @@ module.exports = {
     feedback: feedback
 };
 
-var texvcjs = require("texvcjs");
+var texvcjs = require('mathoid-texvcjs');
 var lister = module.exports.tokensFromAst = require('./flatList');
 var treeWriter = module.exports.treeFromAst = require('./arrayTree');
 var jsonWriter = module.exports.treeFromAst = require('./d3json');

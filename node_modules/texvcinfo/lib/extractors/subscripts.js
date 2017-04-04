@@ -1,6 +1,6 @@
 "use strict";
 
-var ast = module.exports.ast = require('texvcjs').ast;
+var ast = module.exports.ast = require('mathoid-texvcjs').ast;
 var letterMods = require('../letterMods.json');
 var extendedLiterals = require('../literals.json').slice(0);
 extendedLiterals.push('\\infty', '\\emptyset');

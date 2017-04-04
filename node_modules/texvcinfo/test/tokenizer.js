@@ -1,6 +1,6 @@
 "use strict";
 var assert = require('assert');
-var texvc = require("texvcjs");
+var texvc = require('mathoid-texvcjs');
 var lister = require('../lib/flatList');
 var testcases = [
     {in: '', out: []},

@@ -71,117 +71,182 @@ var testcases = [
     {
         input: '\\sin\\left(x)',
         out: {
+            "success": false,
             "error": {
+                "message": "Expected \"-\", \"[\", \"\\\\\", \"\\\\begin\", \"\\\\begin{\", \"]\", \"^\", \"_\", \"{\", [ \\t\\n\\r], [%$], [().], [,:;?!'], [/|], [0-9], [><~], [\\-+*=], or [a-zA-Z] but end of input found.",
                 "expected": [
                     {
-                        "description": "\"-\"",
-                        "type": "literal",
-                        "value": "-"
-                    },
-                    {
-                        "description": "\"[\"",
-                        "type": "literal",
-                        "value": "["
-                    },
-                    {
-                        "description": "\"\\\\\"",
-                        "type": "literal",
-                        "value": "\\"
-                    },
-                    {
-                        "description": "\"\\\\begin\"",
-                        "type": "literal",
-                        "value": "\\begin"
-                    },
-                    {
-                        "description": "\"\\\\begin{\"",
-                        "type": "literal",
-                        "value": "\\begin{"
-                    },
-                    {
-                        "description": "\"]\"",
-                        "type": "literal",
-                        "value": "]"
-                    },
-                    {
-                        "description": "\"^\"",
-                        "type": "literal",
-                        "value": "^"
-                    },
-                    {
-                        "description": "\"_\"",
-                        "type": "literal",
-                        "value": "_"
-                    },
-                    {
-                        "description": "\"{\"",
-                        "type": "literal",
-                        "value": "{"
-                    },
-                    {
-                        "description": "[ \\t\\n\\r]",
                         "type": "class",
-                        "value": "[ \\t\\n\\r]"
+                        "parts": [
+                            " ",
+                            "\t",
+                            "\n",
+                            "\r"
+                        ],
+                        "inverted": false,
+                        "ignoreCase": false
                     },
                     {
-                        "description": "[%$]",
-                        "type": "class",
-                        "value": "[%$]"
+                        "type": "literal",
+                        "text": "_",
+                        "ignoreCase": false
                     },
                     {
-                        "description": "[().]",
-                        "type": "class",
-                        "value": "[().]"
+                        "type": "literal",
+                        "text": "^",
+                        "ignoreCase": false
                     },
                     {
-                        "description": "[,:;?!\\']",
                         "type": "class",
-                        "value": "[,:;?!\\']"
+                        "parts": [
+                            [
+                                "a",
+                                "z"
+                            ],
+                            [
+                                "A",
+                                "Z"
+                            ]
+                        ],
+                        "inverted": false,
+                        "ignoreCase": false
                     },
                     {
-                        "description": "[-+*=]",
                         "type": "class",
-                        "value": "[-+*=]"
+                        "parts": [
+                            [
+                                "0",
+                                "9"
+                            ]
+                        ],
+                        "inverted": false,
+                        "ignoreCase": false
                     },
                     {
-                        "description": "[0-9]",
                         "type": "class",
-                        "value": "[0-9]"
+                        "parts": [
+                            ",",
+                            ":",
+                            ";",
+                            "?",
+                            "!",
+                            "'"
+                        ],
+                        "inverted": false,
+                        "ignoreCase": false
                     },
                     {
-                        "description": "[><~]",
-                        "type": "class",
-                        "value": "[><~]"
+                        "type": "literal",
+                        "text": "-",
+                        "ignoreCase": false
                     },
                     {
-                        "description": "[\\/|]",
                         "type": "class",
-                        "value": "[\\/|]"
+                        "parts": [
+                            "-",
+                            "+",
+                            "*",
+                            "="
+                        ],
+                        "inverted": false,
+                        "ignoreCase": false
                     },
                     {
-                        "description": "[a-zA-Z]",
+                        "type": "literal",
+                        "text": "\\",
+                        "ignoreCase": false
+                    },
+                    {
+                        "type": "literal",
+                        "text": "\\",
+                        "ignoreCase": false
+                    },
+                    {
                         "type": "class",
-                        "value": "[a-zA-Z]"
+                        "parts": [
+                            ">",
+                            "<",
+                            "~"
+                        ],
+                        "inverted": false,
+                        "ignoreCase": false
+                    },
+                    {
+                        "type": "class",
+                        "parts": [
+                            "%",
+                            "$"
+                        ],
+                        "inverted": false,
+                        "ignoreCase": false
+                    },
+                    {
+                        "type": "class",
+                        "parts": [
+                            "(",
+                            ")",
+                            "."
+                        ],
+                        "inverted": false,
+                        "ignoreCase": false
+                    },
+                    {
+                        "type": "class",
+                        "parts": [
+                            "/",
+                            "|"
+                        ],
+                        "inverted": false,
+                        "ignoreCase": false
+                    },
+                    {
+                        "type": "literal",
+                        "text": "[",
+                        "ignoreCase": false
+                    },
+                    {
+                        "type": "literal",
+                        "text": "\\",
+                        "ignoreCase": false
+                    },
+                    {
+                        "type": "literal",
+                        "text": "{",
+                        "ignoreCase": false
+                    },
+                    {
+                        "type": "literal",
+                        "text": "\\begin",
+                        "ignoreCase": false
+                    },
+                    {
+                        "type": "literal",
+                        "text": "\\begin{",
+                        "ignoreCase": false
+                    },
+                    {
+                        "type": "literal",
+                        "text": "]",
+                        "ignoreCase": false
                     }
                 ],
                 "found": null,
                 "location": {
-                    "end": {
-                        "column": 13,
-                        "line": 1,
-                        "offset": 12
-                    },
                     "start": {
-                        "column": 13,
+                        "offset": 12,
                         "line": 1,
-                        "offset": 12
+                        "column": 13
+                    },
+                    "end": {
+                        "offset": 12,
+                        "line": 1,
+                        "column": 13
                     }
                 },
-                "message": "Expected \"-\", \"[\", \"\\\\\", \"\\\\begin\", \"\\\\begin{\", \"]\", \"^\", \"_\", \"{\", [ \\t\\n\\r], [%$], [().], [,:;?!\\'], [-+*=], [0-9], [><~], [\\/|] or [a-zA-Z] but end of input found.",
                 "name": "SyntaxError"
-            },
-            "success": false
+            }
         }
+
     },
     {
         input: '\\ce{H2O}',
