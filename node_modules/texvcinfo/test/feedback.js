@@ -254,10 +254,7 @@ var testcases = [
         out: {
             "checked": "{\\ce {H2O}}",
             "endsWithDot": false,
-            "identifiers": [
-                "H",
-                "O"
-            ],
+            "identifiers": [],
             "requiredPackages": [
                 "mhchem"
             ],

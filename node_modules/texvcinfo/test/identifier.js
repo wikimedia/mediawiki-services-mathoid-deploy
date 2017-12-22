@@ -146,6 +146,14 @@ var testcases = [
     }, {
         in:"{\\frac {\\operatorname {d} u_{x}}{\\operatorname {d} t}}",
         out: ["u_{x}","t"]
+    }, {
+        in:"\\ce{H2O}", out:[]
+    }, {
+        in:"a_{\\ce{H2O}}", out:[ 'a' ]
+    }, {
+        in:"\\mathbb{\\ce{H2O}}", out:[]
+    }, {
+        in:"\\ce{\\underbrace{a}_{b}}",out:[]
     }
     //{in: "\\reals", out:["\\reals"]},
     //{in: "\\mathrm {MTF}_{display}(\\xi,\\eta)", out: ["\\mathrm{MTF}_{display}", "\\xi", "\\eta"]}

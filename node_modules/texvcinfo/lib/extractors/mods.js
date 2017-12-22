@@ -84,5 +84,20 @@ ast.Tex.defineVisitor("getModIdent", {
     },
     UQN: function () {
         return [];
+    },
+    CHEM_WORD: function () {
+        /* istanbul ignore next */
+        return [];
+    },
+    CHEM_FUN2u: function () {
+        /* istanbul ignore next */
+        return [];
+    },
+    MHCHEM: function () {
+        return [];
+    },
+    DOLLAR: function () {
+        /* istanbul ignore next */
+        return [];
     }
 });

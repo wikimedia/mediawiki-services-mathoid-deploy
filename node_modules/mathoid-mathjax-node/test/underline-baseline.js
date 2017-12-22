@@ -1,8 +1,8 @@
 var tape = require('tape');
-var mjAPI = require("..//lib/mj-single.js");
+var mjAPI = require("../lib/main.js");
 
 tape('basic test: check MathJax core', function (t) {
-    t.plan(2);
+    t.plan(1);
 
     var tex = '\\underline{\\mathrm{Z}}'; // From https://phabricator.wikimedia.org/T135423
     mjAPI.start();
@@ -14,6 +14,5 @@ tape('basic test: check MathJax core', function (t) {
         mathoidStyle: true
     }, function (data) {
         t.ok(data.svg.indexOf('margin-bottom') > 0, 'There should be a margin adjustment');
-        t.ok(data.mathoidStyle.indexOf('width') > 0, 'Mathoid style must include width info');
     });
 });

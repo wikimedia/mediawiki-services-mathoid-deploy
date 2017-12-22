@@ -6,21 +6,6 @@ var extendedLiterals = require('../literals.json').slice(0);
 extendedLiterals.push('\\infty', '\\emptyset');
 
 ast.RenderT.defineVisitor("id_part", {
-    HTMLABLE: function (_, t, _2) {
-        return t;
-    },
-    HTMLABLEM: function (_, t, _2) {
-        return t;
-    },
-    HTMLABLEC: function (_, t, _2) {
-        return t;
-    },
-    MHTMLABLEC: function (_, t, _2, _3, _4) {
-        return t;
-    },
-    HTMLABLE_BIG: function (t, _) {
-        return t;
-    },
     TEX_ONLY: function (t) {
         return t;
     }
@@ -148,6 +133,21 @@ ast.Tex.defineVisitor("extractSubscipts", {
         return [];
     },
     UQN: function () {
+        return [];
+    },
+    CHEM_WORD: function () {
+        /* istanbul ignore next */
+        return [];
+    },
+    CHEM_FUN2u: function () {
+        /* istanbul ignore next */
+        return [];
+    },
+    MHCHEM: function () {
+        return [];
+    },
+    DOLLAR: function () {
+        /* istanbul ignore next */
         return [];
     }
 });

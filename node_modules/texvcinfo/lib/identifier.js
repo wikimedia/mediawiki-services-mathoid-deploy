@@ -152,5 +152,21 @@ ast.Tex.defineVisitor("extractIdentifiers", {
     },
     LR: function (l, r, tl) {
         return render(tl);
+    },
+    // There are no maths identifiers in chemistry
+    CHEM_WORD: function () {
+        /* istanbul ignore next */
+        return [];
+    },
+    CHEM_FUN2u: function () {
+        /* istanbul ignore next */
+        return [];
+    },
+    MHCHEM: function () {
+        return [];
+    },
+    DOLLAR: function () {
+        /* istanbul ignore next */
+        return [];
     }
 });
