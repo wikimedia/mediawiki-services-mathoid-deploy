@@ -47,32 +47,44 @@ var testcases = [
     {
         input: 'a+\\badfunc-b',
         out: {
-            "error": {
-                "expected": [],
-                "found": "\\badfunc",
-                "location": {
-                    "end": {
-                        "column": 11,
-                        "line": 1,
-                        "offset": 10
-                    },
-                    "start": {
-                        "column": 3,
-                        "line": 1,
-                        "offset": 2
-                    }
-                },
-                "message": "Illegal TeX function",
-                "name": "SyntaxError"
+          "column": 3,
+          "details": "\\badfunc",
+          "error": {
+            "expected": [],
+            "found": "\\badfunc",
+            "location": {
+              "end": {
+                "column": 11,
+                "line": 1,
+                "offset": 10
+              },
+              "start": {
+                "column": 3,
+                "line": 1,
+                "offset": 2
+              }
             },
-            "success": false
+            "message": "Illegal TeX function",
+            "name": "SyntaxError"
+          },
+          "line": 1,
+          "offset": 2,
+          "status": "F",
+          "success": false,
+          "warnings": []
         }
     },
     {
         input: '\\sin\\left(x)',
         out: {
-            "success": false,
-            "error": {
+          "line": 1,
+          "offset": 12,
+          "status": "S",
+          "success": false,
+          "warnings": [],
+          "column": 13,
+          "details": "SyntaxError: Expected \"-\", \"[\", \"\\\\\", \"\\\\begin\", \"\\\\begin{\", \"]\", \"^\", \"_\", \"{\", [ \\t\\n\\r], [%$], [().], [,:;?!'], [/|], [0-9], [><~], [\\-+*=], or [a-zA-Z] but end of input found.",
+          "error": {
                 "message": "Expected \"-\", \"[\", \"\\\\\", \"\\\\begin\", \"\\\\begin{\", \"]\", \"^\", \"_\", \"{\", [ \\t\\n\\r], [%$], [().], [,:;?!'], [/|], [0-9], [><~], [\\-+*=], or [a-zA-Z] but end of input found.",
                 "expected": [
                     {

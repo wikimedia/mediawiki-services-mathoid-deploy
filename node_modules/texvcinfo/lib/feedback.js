@@ -7,29 +7,24 @@ module.exports = function (input, options) {
     var out = {
         success: true
     };
-    try {
-        // allow user to pass a parsed AST as input, as well as a string
-        if (typeof(input) === 'string') {
-            input = texvcjs.parse(input, {usemathrm: true});
-        }
-    } catch (e) {
-        out.success = false;
-        out.error = e;
-        return out;
-    }
     options = options || {};
-    var texvcres = texvcjs.check(input, options);
-    if (texvcres.status !== '+') {
-        out.success = false;
-        out.error = {
-            status: texvcres.status,
-            message: "Attempting to use the $\\ce$ command outside of a chemistry environment.",
-            detail: texvcres.details,
-            found: "\\ce", // ce is the only command that can trigger this problem
-            name: "SyntaxError"
-        };
-        return out;
+    var texvcres = texvcjs.check(input, Object.assign(options, {usemathrm:true}));
+    //TODO: Backwards compatibility consider to remove in the next update
+    if (texvcres.status === 'C') {
+      out.success = false;
+      out.error = {
+        status: texvcres.status,
+        message: "Attempting to use the $\\ce$ command outside of a chemistry environment.",
+        detail: texvcres.details,
+        found: "\\ce", // ce is the only command that can trigger this problem
+        name: "SyntaxError"
+      };
+      return out;
     }
+    if (texvcres.status !== '+') {
+        return texvcres;
+    }
+    input = texvcres.input;
     out.checked = texvcres.output;
     out.requiredPackages = [];
     packageList.forEach(function (pkg) {
